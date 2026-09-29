@@ -1,0 +1,56 @@
+---
+layout: layouts/base.njk
+---
+{%- set hero = collections.journal[0] %}
+{%- set heroPlay = collections.plays | findPlay(hero.data.play) if hero %}
+{% if hero %}
+<section class="hero">
+  <div style="min-width:0">
+    {% if heroPlay %}<a class="pill" href="{{ heroPlay.url }}">Play: {{ heroPlay.data.title }}</a>{% endif %}
+    <h1>{{ hero.data.headline or hero.data.title }}{% if hero.data.headlineAccent %} <span class="acc">{{ hero.data.headlineAccent }}</span>{% endif %}</h1>
+    <p class="dek">{{ hero.data.dek }}</p>
+    {% if hero.data.chart %}<figure>
+      <div class="chart"><img src="{{ hero.data.chart }}" alt="{{ hero.data.chartAlt }}"></div>
+      {% if hero.data.chartCaption %}<figcaption>{{ hero.data.chartCaption }}</figcaption>{% endif %}
+    </figure>{% endif %}
+  </div>
+  <aside class="side" aria-label="Trade recap summary">
+    {% if hero.data.stats %}<dl class="stats">{% for s in hero.data.stats %}<div><dt>{{ s.label }}</dt><dd{% if s.tone %} class="{{ 'u' if s.tone == 'up' else 'd' }}"{% endif %}>{{ s.value }}</dd></div>{% endfor %}</dl>{% endif %}
+    {% if hero.data.steps %}<ol class="steps">{% for st in hero.data.steps %}<li><b>{{ loop.index }}</b><span>{{ st }}</span></li>{% endfor %}</ol>{% endif %}
+    {% if hero.data.lesson %}<p class="lesson">"{{ hero.data.lesson }}"</p>{% endif %}
+    <a class="btn" href="{{ hero.url }}">Read the full recap →</a>
+  </aside>
+</section>
+{% endif %}
+
+<section class="block" id="playbook">
+  <div class="sec-head">
+    <div>
+      <p class="label">The Playbook</p>
+      <h2>Most traded setups</h2>
+    </div>
+    <a class="btn" href="/playbook/">See all plays</a>
+  </div>
+  {%- set featuredSlug = hero.data.play if hero %}
+  {%- for bias in ["Long", "Short"] %}
+  <h3 class="group-label">{{ bias }}s</h3>
+  <div class="plays">
+    {%- for play in collections.plays | byBias(bias) %}{% include "play-card.njk" %}{% endfor %}
+  </div>
+{%- endfor %}
+</section>
+
+<section class="block" id="journal">
+  <div class="journal">
+    <div style="min-width:0">
+      <div class="sec-head"><div><p class="label">Trade Journal</p><h2>Latest writing</h2></div><a class="btn" href="/journal/">All entries</a></div>
+      <ul class="posts">
+        {%- for p in collections.writing | head(5) %}
+        {%- set pp = collections.plays | findPlay(p.data.play) %}
+        <li><time{% if not p.data.comingSoon %} datetime="{{ p.date | isoDate }}"{% endif %}>{{ "Coming soon" if p.data.comingSoon else (p.date | longDate) }}</time><div><h3><a href="{{ p.url }}">{{ p.data.title }}</a></h3>{% if pp or p.data.dek %}<p>{% if pp %}{{ pp.data.title }}{% if p.data.dek %} · {% endif %}{% endif %}{{ p.data.dek }}</p>{% endif %}</div></li>
+        {%- endfor %}
+      </ul>
+    </div>
+    {% include "about-box.njk" %}
+  </div>
+</section>

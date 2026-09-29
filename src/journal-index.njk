@@ -1,0 +1,12 @@
+---
+layout: layouts/base.njk
+title: Trade Journal
+permalink: /journal/
+---
+<section class="page-head"><p class="label">Trade Journal</p><h1>Every recap</h1><p>Trades, lessons, and the stories behind them, newest first.</p></section>
+<ul class="posts" style="padding-bottom:48px">
+  {%- for p in collections.writing %}
+  {%- set pp = collections.plays | findPlay(p.data.play) %}
+  <li><time{% if not p.data.comingSoon %} datetime="{{ p.date | isoDate }}"{% endif %}>{{ "Coming soon" if p.data.comingSoon else (p.date | longDate) }}</time><div><h3><a href="{{ p.url }}">{{ p.data.title }}</a></h3>{% if pp or p.data.dek %}<p>{% if pp %}{{ pp.data.title }}{% if p.data.dek %} · {% endif %}{% endif %}{{ p.data.dek }}</p>{% endif %}</div></li>
+  {%- endfor %}
+</ul>

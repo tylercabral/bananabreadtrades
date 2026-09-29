@@ -1,0 +1,24 @@
+---
+layout: layouts/base.njk
+---
+{%- set play = collections.plays | findPlay(play) %}
+<section class="page-head">
+  <div class="meta-line">
+    {% if play %}<a class="pill" href="{{ play.url }}">Play: {{ play.data.title }}</a>{% endif %}
+    {% if comingSoon %}<span>Coming soon</span>{% else %}<time datetime="{{ page.date | isoDate }}">{{ page.date | longDate }}</time>{% endif %}
+    {% if ticker %}<span>{{ ticker }}</span>{% endif %}
+  </div>
+  <h1>{{ title }}</h1>
+  {% if dek %}<p>{{ dek }}</p>{% endif %}
+</section>
+<div class="article">
+  <div class="prose">
+    {% if chart %}<figure><div class="chart"><img src="{{ chart }}" alt="{{ chartAlt }}"></div>{% if chartCaption %}<figcaption>{{ chartCaption }}</figcaption>{% endif %}</figure>{% endif %}
+    {{ content | safe }}
+  </div>
+  <aside class="side">
+    {% if stats %}<dl class="stats">{% for s in stats %}<div><dt>{{ s.label }}</dt><dd{% if s.tone %} class="{{ 'u' if s.tone == 'up' else 'd' }}"{% endif %}>{{ s.value }}</dd></div>{% endfor %}</dl>{% endif %}
+    {% if steps %}<ol class="steps">{% for st in steps %}<li><b>{{ loop.index }}</b><span>{{ st }}</span></li>{% endfor %}</ol>{% endif %}
+    {% if lesson %}<p class="lesson">"{{ lesson }}"</p>{% endif %}
+  </aside>
+</div>

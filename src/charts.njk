@@ -1,0 +1,11 @@
+---
+layout: layouts/base.njk
+title: Charts
+permalink: /charts/
+---
+<section class="page-head"><p class="label">Chart Archive</p><h1>Charts</h1><p>Every chart from the journal in one place. Click one to read the recap.</p></section>
+<div class="chart-grid">
+  {%- for p in collections.journal %}{% if p.data.chart %}
+  <a href="{{ p.url }}"><div class="chart"><img src="{{ p.data.chart }}" alt="{{ p.data.chartAlt }}" loading="lazy"></div><b>{{ p.data.ticker }} · {{ p.date | shortDate }}</b><span class="label">{{ (collections.plays | findPlay(p.data.play)).data.title if (collections.plays | findPlay(p.data.play)) }}</span></a>
+  {% endif %}{%- endfor %}
+</div>

@@ -1,0 +1,8 @@
+{%- set recaps = collections.journal | byPlay(play.fileSlug) %}
+<a class="play{% if featuredSlug == play.fileSlug %} featured{% endif %}" href="{{ play.url }}">
+  <div class="top"><span class="bias {{ 'd' if play.data.bias == 'Short' else 'u' }}">{{ play.data.bias }}</span>{% if play.data.sample %}<span class="sample">DRAFT</span>{% else %}<span class="label">{{ recaps.length }} recap{{ '' if recaps.length == 1 else 's' }}</span>{% endif %}</div>
+  <h3>{{ play.data.title }}</h3>
+  {% if play.data.spark %}<svg class="spark" viewBox="0 0 200 46" preserveAspectRatio="none" aria-hidden="true"><polyline fill="none" stroke="var({{ '--down' if play.data.bias == 'Short' else '--up' }})" stroke-width="2" points="{{ play.data.spark }}"/></svg>{% endif %}
+  <p>{{ play.data.summary }}</p>
+  <div class="meta">{% if recaps.length %}<span>Latest: {{ recaps[0].data.ticker }}</span><span>{{ recaps[0].date | shortDate }}</span>{% else %}<span>No recaps yet</span><span>—</span>{% endif %}</div>
+</a>

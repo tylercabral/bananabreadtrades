@@ -1,0 +1,17 @@
+---
+layout: layouts/base.njk
+---
+{%- set recaps = collections.journal | byPlay(page.fileSlug) %}
+<section class="page-head">
+  <div class="meta-line"><span class="bias {{ 'd' if bias == 'Short' else 'u' }}">{{ bias }}</span>{% if sample %}<span class="sample">DRAFT · replace with your rules</span>{% endif %}</div>
+  <h1>{{ title }}</h1>
+  <p>{{ summary }}</p>
+</section>
+<div class="article">
+  <div class="prose">{{ content | safe }}</div>
+  <aside class="side">
+    <p class="label">Recaps of this play</p>
+    {% if recaps.length %}<ul class="posts">{% for p in recaps %}<li><time>{{ p.date | shortDate }}</time><div><h3><a href="{{ p.url }}">{{ p.data.title }}</a></h3></div></li>{% endfor %}</ul>
+    {% else %}<p class="empty">No recaps logged yet.</p>{% endif %}
+  </aside>
+</div>

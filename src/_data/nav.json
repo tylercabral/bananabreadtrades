@@ -1,0 +1,8 @@
+[
+  { "label": "Home", "url": "/" },
+  { "label": "Playbook", "url": "/playbook/" },
+  { "label": "Trade Journal", "url": "/journal/" },
+  { "label": "Charts", "url": "/charts/" },
+  { "label": "Profit", "url": "/profit/" },
+  { "label": "About", "url": "/about/" }
+]
