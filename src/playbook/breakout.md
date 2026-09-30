@@ -3,7 +3,7 @@ title: "Breakout"
 bias: Long
 order: 2
 sample: true
-summary: "A bullish pattern with the daily and intraday charts aligning"
+summary: "A bullish pattern with the daily and intraday charts aligning."
 spark: "0,30 25,27 50,31 75,26 100,30 120,27 135,18 150,14 170,10 200,6"
 ---
 
